@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct Task {
+    var title: String //할일의 내용
+    var done: Bool //할일이 완료되었는지 여부
+}
