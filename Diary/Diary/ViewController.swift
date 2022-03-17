@@ -21,6 +21,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.configureCollectionView()
         self.loadDiaryList()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(editDiaryNotification(_:)),
+            name: NSNotification.Name("editDiary"),
+            object: nil)
     }
     
     //collectionView 속성 정의 메소드
@@ -30,6 +35,17 @@ class ViewController: UIViewController {
         self.collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+    }
+    
+    @objc func editDiaryNotification(_ notification: Notification) {
+        guard let diary = notification.object as? Diary else {return}
+        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return}
+        self.diaryList[row] = diary
+        self.diaryList = self.diaryList.sorted(by: {
+            //날짜 수정될 수도 있으니까 날짜 최신순으로 정렬하는 코드
+            $0.date.compare($1.date) == .orderedDescending
+        })
+        self.collectionView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -103,6 +119,19 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension ViewController: UICollectionViewDelegate {
+    //특정 셀이 선택되었음을 알리는 메서드
+    //diaryDatailViewController가 표시되게 구현
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DiaryDetailViewController") as? DiaryDetailViewController else {return}
+        let diary = self.diaryList[indexPath.row]
+        viewController.diary = diary
+        viewController.indexPath = indexPath
+        viewController.delegate = self
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
 extension ViewController: WriteDiaryViewDelegate {
     //일기가 등록되면 didSelectRegister 메소드를 통해 작성된 일기의 내용이 담겨져 있는 Diary 객체 전달
     func didSelectRegister(diary: Diary) {
@@ -115,3 +144,9 @@ extension ViewController: WriteDiaryViewDelegate {
     }
 }
 
+extension ViewController: DiaryDetailViewDelegate {
+    func didSelectDelete(indexPath: IndexPath) {
+        self.diaryList.remove(at: indexPath.row)
+        self.collectionView.deleteItems(at: [indexPath])
+    }
+}
