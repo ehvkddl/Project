@@ -263,6 +263,10 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="80"/>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="zMm-tB-jVo" id="8tB-U8-kIJ"/>
+                                            <outlet property="titleLabel" destination="WsS-tH-Q1u" id="R3V-mE-70x"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -277,6 +281,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lQS-U4-88P"/>
+                    <connections>
+                        <outlet property="collectionView" destination="CtZ-YK-gJT" id="XG2-iw-h2X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sn6-9G-W4X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
