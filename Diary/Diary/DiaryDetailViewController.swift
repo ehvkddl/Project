@@ -28,6 +28,11 @@ class DiaryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(starDiaryNotification(_:)),
+            name: NSNotification.Name("starDiary"),
+            object: nil)
     }
     
     //프로퍼티를 통해 전달받은 다이어리 객체를 view에 초기화
@@ -51,9 +56,21 @@ class DiaryDetailViewController: UIViewController {
     
     @objc func editDiaryNotification(_ notification: Notification){
         guard let diary = notification.object as? Diary else {return}
-        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return}
+        //guard let row = notification.userInfo?["indexPath.row"] as? Int else {return}
         self.diary = diary //전달된 수정받은 diary 객체 대입
         self.configureView()
+    }
+    
+    @objc func starDiaryNotification(_ notification: Notification) {
+        guard let starDiary = notification.object as? [String: Any] else {return}
+        guard let isStar = starDiary["isStar"] as? Bool else {return}
+        guard let uuidString = starDiary["uuidString"] as? String else {return}
+        guard let diary = self.diary else {return}
+        if diary.uuidString == uuidString {
+            //현재 일기 상세화면의 유효id가 이벤트로 전달받은 유효id string과 같다면
+            self.diary?.isStar = isStar
+            self.configureView()
+        }
     }
     
     @IBAction func tapEditButton(_ sender: UIButton) {
@@ -73,11 +90,12 @@ class DiaryDetailViewController: UIViewController {
     }
     
     @IBAction func tapDeleteButton(_ sender: UIButton) {
-        guard let indexPath = self.indexPath else {return}
+        guard let uuidString = self.diary?.uuidString else {return}
+        //guard let indexPath = self.indexPath else {return}
         //self.delegate?.didSelectDelete(indexPath: indexPath)
         NotificationCenter.default.post(
             name: NSNotification.Name("deleteDiary"),
-            object: indexPath,
+            object: uuidString,
             userInfo: nil
         )
         self.navigationController?.popViewController(animated: true)
@@ -86,7 +104,7 @@ class DiaryDetailViewController: UIViewController {
     @objc func tapStarButton() {
         //toggle하는 기능
         guard let isStar = self.diary?.isStar else {return}
-        guard let indexPath = self.indexPath else {return}
+        //guard let indexPath = self.indexPath else {return}
         
         if isStar { //isStar가 true이면 빈 별로 바꾸고 isStar도 false로 바뀜
             self.starButton?.image = UIImage(systemName: "star")
@@ -99,7 +117,8 @@ class DiaryDetailViewController: UIViewController {
             object: [
                 "diary": self.diary, //즐겨찾기 된 diary객체를 notification에 전달
                 "isStar": self.diary?.isStar ?? false,
-                "indexPath": indexPath
+                //"indexPath": indexPath
+                "uuidString": diary?.uuidString
             ],
             userInfo: nil)
         //self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false)

@@ -91,16 +91,24 @@ class WriteDiaryViewController: UIViewController {
         
         switch self.diaryEditorMode {
         case .new: //일기를 등록하는 행위
-            let diary = Diary(title: title, contents: contents, date: date, isStar: false)
+            let diary = Diary(
+                uuidString: UUID().uuidString, //일기를 생성할때마다 uuidString 프로퍼티에 유효id생성됨
+                title: title,
+                contents: contents,
+                date: date,
+                isStar: false)
             self.delegate?.didSelectRegister(diary: diary)
         case let .edit(indexPath, diary):
-            let diary = Diary(title: title, contents: contents, date: date, isStar: diary.isStar)
+            let diary = Diary(
+                uuidString: diary.uuidString,
+                title: title,
+                contents: contents,
+                date: date,
+                isStar: diary.isStar)
             NotificationCenter.default.post(
                 name: NSNotification.Name("editDiary"),
                 object: diary,
-                userInfo: [
-                    "indexPath.row": indexPath.row
-                ]
+                userInfo: nil
             )
         }
         self.navigationController?.popViewController(animated: true) //등록화면 없애고 일기list화면으로 돌아가도록
