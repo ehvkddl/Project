@@ -15,6 +15,7 @@
 		EA671AFA27EDCDAD0096FDD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA671AF927EDCDAD0096FDD2 /* Assets.xcassets */; };
 		EA671AFD27EDCDAD0096FDD2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA671AFB27EDCDAD0096FDD2 /* LaunchScreen.storyboard */; };
 		EA671B0527EDD8E30096FDD2 /* CovidDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA671B0427EDD8E30096FDD2 /* CovidDetailViewController.swift */; };
+		EA671B0727EDFF000096FDD2 /* CityCovidOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA671B0627EDFF000096FDD2 /* CityCovidOverview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		EA671AFC27EDCDAD0096FDD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA671AFE27EDCDAD0096FDD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA671B0427EDD8E30096FDD2 /* CovidDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidDetailViewController.swift; sourceTree = "<group>"; };
+		EA671B0627EDFF000096FDD2 /* CityCovidOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCovidOverview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				EA671AFB27EDCDAD0096FDD2 /* LaunchScreen.storyboard */,
 				EA671AFE27EDCDAD0096FDD2 /* Info.plist */,
 				EA671B0427EDD8E30096FDD2 /* CovidDetailViewController.swift */,
+				EA671B0627EDFF000096FDD2 /* CityCovidOverview.swift */,
 			);
 			path = COVID19;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				EA671AF527EDCDAC0096FDD2 /* ViewController.swift in Sources */,
 				EA671B0527EDD8E30096FDD2 /* CovidDetailViewController.swift in Sources */,
 				EA671AF127EDCDAC0096FDD2 /* AppDelegate.swift in Sources */,
+				EA671B0727EDFF000096FDD2 /* CityCovidOverview.swift in Sources */,
 				EA671AF327EDCDAC0096FDD2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
