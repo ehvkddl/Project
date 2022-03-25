@@ -14,12 +14,19 @@ class ViewController: UIViewController {
 
     @IBOutlet var totalCaseLabel: UILabel!
     @IBOutlet var newCaseLabel: UILabel!
+    @IBOutlet var indicatorView: UIActivityIndicatorView!
     
+    @IBOutlet var labelStackView: UIStackView!
     @IBOutlet var pieChartView: PieChartView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.indicatorView.startAnimating()
         self.fetchCovidOverview(completionHandler: { [weak self] result in //순환참조 방지
             guard let self = self else { return } //일시적으로 self가 strong reference가 되도록 만들어줌
+            self.indicatorView.stopAnimating()
+            self.indicatorView.isHidden = true
+            self.labelStackView.isHidden = false
+            self.pieChartView.isHidden = false
             switch result {
             case let .success(result):
                 self.configureStackView(koreaCovidOverview: result.korea)
@@ -53,6 +60,7 @@ class ViewController: UIViewController {
     }
     
     func configureChartView(covidOverviewList: [CovidOverview]) {
+        self.pieChartView.delegate = self
         let entries = covidOverviewList.compactMap { [weak self] overview -> PieChartDataEntry? in
             guard let self = self else { return nil }
             return PieChartDataEntry(
@@ -121,3 +129,13 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: ChartViewDelegate {
+    //차트에서 항목을 선택하였을 때 호출이 되는 메서드
+    //entry 메소드 파라미터를 통해 선택된 항목에 저장 돼 있는 데이터를 가져올 수 있음
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        guard let covidDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: "CovidDetailViewController") as? CovidDetailViewController else { return } //storyboard에 있는 CovidDetailViewController를 인스턴스화
+        guard let covidOverview = entry.data as? CovidOverview else { return }
+        covidDetailViewController.covidOverview = covidOverview
+        self.navigationController?.pushViewController(covidDetailViewController, animated: true)
+    }
+}
