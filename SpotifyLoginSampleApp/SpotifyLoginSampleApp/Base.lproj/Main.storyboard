@@ -233,7 +233,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVY-pR-506">
-                                <rect key="frame" x="175.5" y="538" width="63" height="34"/>
+                                <rect key="frame" x="175.5" y="588" width="63" height="34"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="로그아웃">
@@ -253,16 +253,28 @@
                                     <action selector="resetPasswordButtonTapped:" destination="fJX-hE-p3O" eventType="touchUpInside" id="iWX-wt-IFP"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Cm-pM-nbO">
+                                <rect key="frame" x="159.5" y="538" width="95" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="닉네임 업데이트">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="profileUpdateButtonTapped:" destination="fJX-hE-p3O" eventType="touchUpInside" id="jQ8-8a-dzA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BfI-Nl-7h1"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="RVY-pR-506" firstAttribute="centerX" secondItem="BfI-Nl-7h1" secondAttribute="centerX" id="Dog-2S-AuS"/>
+                            <constraint firstItem="8Cm-pM-nbO" firstAttribute="centerX" secondItem="BfI-Nl-7h1" secondAttribute="centerX" id="Gvz-wk-bJb"/>
                             <constraint firstItem="eTE-iw-HEz" firstAttribute="centerY" secondItem="BfI-Nl-7h1" secondAttribute="centerY" id="QgJ-qh-aA4"/>
                             <constraint firstItem="Daw-pt-4se" firstAttribute="centerX" secondItem="BfI-Nl-7h1" secondAttribute="centerX" id="Y8H-GJ-nIr"/>
-                            <constraint firstItem="RVY-pR-506" firstAttribute="top" secondItem="Daw-pt-4se" secondAttribute="bottom" constant="20" id="g7Z-6Y-wBL"/>
+                            <constraint firstItem="RVY-pR-506" firstAttribute="top" secondItem="8Cm-pM-nbO" secondAttribute="bottom" constant="20" id="gKF-kF-jml"/>
                             <constraint firstItem="Daw-pt-4se" firstAttribute="top" secondItem="eTE-iw-HEz" secondAttribute="bottom" constant="20" id="nYP-xC-VRy"/>
                             <constraint firstItem="eTE-iw-HEz" firstAttribute="centerX" secondItem="BfI-Nl-7h1" secondAttribute="centerX" id="tyS-s3-bLa"/>
+                            <constraint firstItem="8Cm-pM-nbO" firstAttribute="top" secondItem="Daw-pt-4se" secondAttribute="bottom" constant="20" id="wTZ-2Z-I5M"/>
                         </constraints>
                     </view>
                     <connections>

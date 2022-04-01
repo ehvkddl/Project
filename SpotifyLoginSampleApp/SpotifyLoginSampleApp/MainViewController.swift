@@ -54,4 +54,18 @@ class MainViewController: UIViewController {
         let email = Auth.auth().currentUser?.email ?? ""
         Auth.auth().sendPasswordReset(withEmail: email, completion: nil)
     }
+    
+    @IBAction func profileUpdateButtonTapped(_ sender: UIButton) {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = "토끼"
+        changeRequest?.commitChanges { _ in
+            let displayName = Auth.auth().currentUser?.displayName ?? Auth.auth().currentUser?.email ?? "고객"
+            
+            self.welcomeLabel.text = """
+                환영합니다.
+                \(displayName)님
+                """
+        }
+    }
+    
 }
