@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
@@ -30,8 +32,30 @@ class LoginViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    private func showMainViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+        mainViewController.modalPresentationStyle = .fullScreen
+        UIApplication.shared.windows.first?.rootViewController?.show(mainViewController, sender: nil)
+    }
+    
     @IBAction func googleLoginButtonTapped(_ sender: UIButton) {
         //Firebase 인증
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { [unowned self] user, error in
+            if let error = error {
+                print("ERROR", error.localizedDescription)
+                return
+            }
+            guard let authentication = user?.authentication,
+                  let idToken = authentication.idToken else { return }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+            Auth.auth().signIn(with: credential) { _, _ in
+                self.showMainViewController()
+            }
+        }
     }
     
     @IBAction func appleLoginButtonTapped(_ sender: UIButton) {
