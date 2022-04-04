@@ -82,7 +82,7 @@
                 <outlet property="cardImageView" destination="gf4-qk-F0K" id="dyI-Ni-0XK"/>
                 <outlet property="cardNameLabel" destination="uGr-uD-EC6" id="kCC-MZ-W6p"/>
                 <outlet property="promotionLabel" destination="cbR-Bg-biV" id="aXB-sZ-Kt1"/>
-                <outlet property="rankLabel" destination="cbR-Bg-biV" id="lfn-OD-Xtx"/>
+                <outlet property="rankLabel" destination="QJM-Qb-R3Z" id="GpG-ml-jFx"/>
             </connections>
             <point key="canvasLocation" x="132" y="131"/>
         </tableViewCell>
