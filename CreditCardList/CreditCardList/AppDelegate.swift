@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        let db = Firestore.firestore()
         
+        db.collection("creditCardList").getDocuments { snapshot, _ in
+            guard snapshot?.isEmpty == true else { return }
+            let batch = db.batch()
+            
+            let card0Ref = db.collection("creditCardList").document("card0")
+            let card1Ref = db.collection("creditCardList").document("card1")
+            let card2Ref = db.collection("creditCardList").document("card2")
+            let card3Ref = db.collection("creditCardList").document("card3")
+            let card4Ref = db.collection("creditCardList").document("card4")
+            let card5Ref = db.collection("creditCardList").document("card5")
+            let card6Ref = db.collection("creditCardList").document("card6")
+            let card7Ref = db.collection("creditCardList").document("card7")
+            let card8Ref = db.collection("creditCardList").document("card8")
+            let card9Ref = db.collection("creditCardList").document("card9")
+            let card10Ref = db.collection("creditCardList").document("card10")
+            
+            do {
+                try
+            } catch let error {
+                print("ERROR writing card to Firestore \(error.localizedDescription)")
+            }
+            
+        }
         return true
     }
 
