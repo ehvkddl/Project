@@ -104,6 +104,7 @@ class CardListTableViewController: UITableViewController {
         detailViewController.promotionDetail = creditCardList[indexPath.row].promotionDetail
         self.show(detailViewController, sender: nil)
         
+        //실시간 데이터베이스 쓰기
         //Option1
 //        let cardID = creditCardList[indexPath.row].id
 //        ref.child("Item\(cardID)/isSelected").setValue(true) //child에 path를 추가
@@ -116,6 +117,20 @@ class CardListTableViewController: UITableViewController {
 //
 //            self.ref.child("\(key)/isSelected").setValue(true)
 //        }
+        
+        //Firestore 쓰기
+        //option1
+        let cardID = creditCardList[indexPath.row].id
+//        db.collection("creditCardList").document("card\(cardID)").updateData(["isSelected": true])
+        
+        //option2
+        db.collection("creditCardList").whereField("id", isEqualTo: cardID).getDocuments { snapshot, _ in
+            guard let document = snapshot?.documents.first else {
+                print("ERROR Firestore fetching document")
+                return
+            }
+            document.reference.updateData(["isSelected": true])
+        }
     }
     
     
@@ -127,6 +142,7 @@ class CardListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            //실시간 데이터베이스 삭제
             //option1
 //            let cardID = creditCardList[indexPath.row].id
 //            ref.child("Item\(cardID)").removeValue()
@@ -139,6 +155,20 @@ class CardListTableViewController: UITableViewController {
 //
 //                self.ref.child(key).removeValue()
 //            }
+            
+            //firestore 삭제
+            //option1
+            let cardID = creditCardList[indexPath.row].id
+//            db.collection("creditCardList").document("card\(cardID)").delete()
+            
+            //option2
+            db.collection("creditCardList").whereField("id", isEqualTo: cardID).getDocuments { snapshot, _ in
+                guard let document = snapshot?.documents.first else {
+                    print("ERROR")
+                    return
+                }
+                document.reference.delete()
+            }
         }
     }
 
