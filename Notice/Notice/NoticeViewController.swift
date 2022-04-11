@@ -8,6 +8,7 @@
 import UIKit
 
 class NoticeViewController: UIViewController {
+    //data : 원격조정 -> mainView -> noticeView (notice를 표시할지 하지 않을지도 원격조정으로 받아올 것임)
     var noticeContents: (title: String, detail: String, date: String)?
     
     @IBOutlet weak var noticeView: UIView!
